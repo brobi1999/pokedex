@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Pokedex</string>
+    <string name="welcome">Welcome to our pokedex</string>
+    <string name="what_is_your_name">What is your name?</string>
+    <string name="name">Name</string>
+    <string name="what_are_your_fav_pokemon_types">What are your favourite pokemon types?</string>
+    <string name="fire">fire</string>
+    <string name="grass">grass</string>
+    <string name="electric">electric</string>
+    <string name="save_my_account">Save my account</string>
+    <string name="i_have_an_account">I have an account</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="register">Register</string>
+    <string name="password_min_length">Password must be at least 6 characters long!</string>
+    <string name="malformed_email">Email is malformed</string>
+</resources>

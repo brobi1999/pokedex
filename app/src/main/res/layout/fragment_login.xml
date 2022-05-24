@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    android:gravity="center_horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.login.LoginFragment">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="50dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="@string/what_is_your_name"
+        />
+
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/pokeCardViewStyle">
+
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:padding="5dp"
+            android:text="@string/name"
+            />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="@string/what_are_your_fav_pokemon_types"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/cbFire"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
+        <include layout="@layout/label_fire"/>
+
+        <CheckBox
+            android:layout_marginStart="10dp"
+            android:id="@+id/cbGrass"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
+        <include layout="@layout/label_grass"/>
+
+        <CheckBox
+            android:layout_marginStart="10dp"
+            android:id="@+id/cbElectric"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
+        <include layout="@layout/label_electric"/>
+
+    </LinearLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_marginTop="100dp"
+        style="@style/pokeContainerCardViewStyle">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSaveAccount"
+            style="@style/pokeButtonStyle"
+            android:text="@string/save_my_account"/>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_marginTop="20dp"
+        style="@style/pokeContainerCardViewStyle">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogin"
+            style="@style/pokeButtonStyle"
+            android:text="@string/i_have_an_account"/>
+
+    </com.google.android.material.card.MaterialCardView>
+    
+
+
+</LinearLayout>
