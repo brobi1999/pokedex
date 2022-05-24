@@ -14,29 +14,42 @@ class LoginViewModel@Inject constructor(
     private val repository: FirebaseRepository
 ) : ViewModel() {
 
-    private val _isLoading = MutableLiveData(false)
-    val isLoading: LiveData<Boolean>
-        get() = _isLoading
+    private val _isRegLoading = MutableLiveData(false)
+    val isRegLoading: LiveData<Boolean>
+        get() = _isRegLoading
 
-    private val _error = MutableLiveData<Exception>(null)
-    val error: LiveData<Exception>
-        get() = _error
+    private val _regError = MutableLiveData<Exception?>(null)
+    val regError: LiveData<Exception?>
+        get() = _regError
+
+    private val _isLoginLoading = MutableLiveData(false)
+    val isLoginLoading: LiveData<Boolean>
+        get() = _isLoginLoading
+
+    private val _loginError = MutableLiveData<Exception?>(null)
+    val loginError: LiveData<Exception?>
+        get() = _loginError
+
+    private val _success = MutableLiveData(false)
+    val success: LiveData<Boolean>
+        get() = _success
 
     fun register(name: String, favTypes: ArrayList<Int>, email: String, pass: String){
         Log.d("asd", "im called")
         val convFavTypes = convertFavTypeFromIntToPokeType(favTypes)
         viewModelScope.launch {
             try {
-                _isLoading.value = true
+                _isRegLoading.value = true
                 repository.register(name, email, pass)
                 repository.addUserToFirestore(name, email, convFavTypes)
+                _success.value = true
             }
             catch (e: Exception){
                 e.printStackTrace()
-                _error.value = e
+                _regError.value = e
             }
             finally {
-                _isLoading.value = false
+                _isRegLoading.value = false
             }
 
         }
@@ -46,13 +59,16 @@ class LoginViewModel@Inject constructor(
     fun login(email: String, pass: String){
         viewModelScope.launch {
             try {
+                _isLoginLoading.value = true
                 repository.login(email, pass)
+                _success.value = true
             }
             catch (e: Exception){
+                _loginError.value = e
                 e.printStackTrace()
             }
             finally {
-
+                _isLoginLoading.value = false
             }
 
         }
@@ -66,7 +82,13 @@ class LoginViewModel@Inject constructor(
         return enumFavTypes
     }
 
+    fun successReceived() {
+        _success.postValue(false)
+    }
 
-
+    fun errorReceived(){
+        _loginError.postValue(null)
+        _regError.postValue(null)
+    }
 
 }

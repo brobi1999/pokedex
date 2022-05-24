@@ -9,9 +9,14 @@
         android:id="@+id/loginFragment"
         android:name="hu.bme.aut.pokedex.ui.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
-    <dialog
-        android:id="@+id/registerDialogFragment"
-        android:name="hu.bme.aut.pokedex.ui.login.RegisterDialogFragment"
-        android:label="RegisterDialogFragment" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_listFragment"
+            app:destination="@id/listFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/listFragment"
+        android:name="hu.bme.aut.pokedex.ui.list.ListFragment"
+        android:label="ListFragment" />
 </navigation>

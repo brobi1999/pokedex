@@ -14,4 +14,5 @@
     <string name="register">Register</string>
     <string name="password_min_length">Password must be at least 6 characters long!</string>
     <string name="malformed_email">Email is malformed</string>
+    <string name="login">Login</string>
 </resources>

@@ -4,7 +4,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import hu.bme.aut.pokedex.databinding.FragmentLoginBinding
 import hu.bme.aut.pokedex.model.PokeType
@@ -19,7 +21,7 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by viewModels<LoginViewModel>()
+    private val viewModel: LoginViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,8 +33,19 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.success.observe(viewLifecycleOwner) { newSuccess ->
+            if(newSuccess){
+                viewModel.successReceived()
+                navigateToListFragment()
+            }
+
+        }
+
         binding.btnSaveAccount.setOnClickListener {
             RegisterDialogFragment.newInstance(binding.etName.text.toString(), getFavouriteTypes()).show(parentFragmentManager, RegisterDialogFragment.TAG)
+        }
+        binding.btnLogin.setOnClickListener {
+            LoginDialogFragment.newInstance().show(parentFragmentManager, LoginDialogFragment.TAG)
         }
     }
 
@@ -47,5 +60,9 @@ class LoginFragment : Fragment() {
         return array
     }
 
+    private fun navigateToListFragment(){
+        val action = LoginFragmentDirections.actionLoginFragmentToListFragment()
+        view?.findNavController()?.navigate(action)
+    }
 
 }

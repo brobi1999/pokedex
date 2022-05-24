@@ -71,7 +71,7 @@
             style="@style/pokeContainerCardViewStyle">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnRegister"
+                android:id="@+id/btnAuth"
                 style="@style/pokeButtonStyle"
                 android:text="@string/register"/>
 

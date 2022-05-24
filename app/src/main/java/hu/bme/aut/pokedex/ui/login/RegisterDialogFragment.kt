@@ -52,14 +52,16 @@ class RegisterDialogFragment: DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.isLoading.observe(this) { newIsLoading ->
+        viewModel.isRegLoading.observe(this) { newIsLoading ->
             if (newIsLoading)
                 binding.progressBarCyclic.visibility = View.VISIBLE
             else
                 binding.progressBarCyclic.visibility = View.GONE
         }
 
-        viewModel.error.observe(this) { newError ->
+        viewModel.regError.observe(this) { newError ->
+            if(newError != null)
+                viewModel.errorReceived()
             when (newError) {
                 null -> {
                     clearErrors()
@@ -79,8 +81,12 @@ class RegisterDialogFragment: DialogFragment() {
             }
         }
 
-        binding.btnRegister.setOnClickListener {
-            binding.progressBarCyclic.visibility = View.VISIBLE
+        viewModel.success.observe(viewLifecycleOwner) { newSuccess ->
+            if(newSuccess )
+                dismiss()
+        }
+
+        binding.btnAuth.setOnClickListener {
             viewModel.register(
                 arguments?.getString(KEY_NAME) ?: "",
                 arguments?.getIntegerArrayList(KEY_FAV_TYPES) ?: arrayListOf(),
