@@ -68,4 +68,13 @@ dependencies {
     implementation "com.google.dagger:hilt-android:2.38.1"
     kapt "com.google.dagger:hilt-compiler:2.38.1"
 
+    //paging 3
+    def paging_version = "3.0.0"
+    implementation("androidx.paging:paging-runtime-ktx:$paging_version")
+
+    //retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    // GSON
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
 }

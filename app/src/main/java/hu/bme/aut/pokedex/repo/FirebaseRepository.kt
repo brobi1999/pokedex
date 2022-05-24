@@ -3,10 +3,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import hu.bme.aut.pokedex.model.PokeType
+import hu.bme.aut.pokedex.model.ui.PokeType
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class FirebaseRepository @Inject constructor() {
     private var db = FirebaseFirestore.getInstance()
     private var storage = FirebaseStorage.getInstance()

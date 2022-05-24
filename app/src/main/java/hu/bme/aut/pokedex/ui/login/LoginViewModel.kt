@@ -3,7 +3,7 @@ package hu.bme.aut.pokedex.ui.login
 import android.util.Log
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import hu.bme.aut.pokedex.model.PokeType
+import hu.bme.aut.pokedex.model.ui.PokeType
 import hu.bme.aut.pokedex.repo.FirebaseRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject

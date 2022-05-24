@@ -5,11 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import hu.bme.aut.pokedex.databinding.FragmentLoginBinding
-import hu.bme.aut.pokedex.model.PokeType
+import hu.bme.aut.pokedex.model.ui.PokeType
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {

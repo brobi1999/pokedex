@@ -8,11 +8,12 @@
         <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/cb_fire.xml" value="0.36666666666666664" />
         <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/dialog_auth.xml" value="0.36666666666666664" />
         <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/dialog_register.xml" value="0.33" />
-        <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/fragment_list.xml" value="0.23020833333333332" />
+        <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/fragment_list.xml" value="0.264" />
         <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/fragment_login.xml" value="0.5" />
         <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/label_electric.xml" value="0.34556159420289856" />
         <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/label_fire.xml" value="0.75" />
         <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/label_grass.xml" value="0.34556159420289856" />
+        <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/poke_item.xml" value="0.2390625" />
         <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2865" />
       </map>
     </option>
