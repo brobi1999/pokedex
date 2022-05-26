@@ -3,6 +3,9 @@ package hu.bme.aut.pokedex
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import dagger.hilt.android.AndroidEntryPoint
 import hu.bme.aut.pokedex.databinding.ActivityMainBinding
 

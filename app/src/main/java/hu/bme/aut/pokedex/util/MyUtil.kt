@@ -14,6 +14,7 @@ import androidx.annotation.RequiresApi
 import hu.bme.aut.pokedex.R
 import hu.bme.aut.pokedex.databinding.LabelTypeBinding
 import hu.bme.aut.pokedex.databinding.LayoutStatBinding
+import hu.bme.aut.pokedex.model.ui.Poke
 
 class MyUtil {
     companion object {
@@ -125,6 +126,34 @@ class MyUtil {
                 it.tvDef.text = context.getString(R.string.stat_def,  def.toString())
                 it.tvHp.text = context.getString(R.string.stat_hp,  hp.toString())
                 it.tvSp.text = context.getString(R.string.stat_Sp,  sp.toString())
+            }
+        }
+
+        fun shouldIncludeType(type: String, type2: String, filterFire: Boolean, filterGrass: Boolean, filterElectric: Boolean): Boolean{
+            return when{
+                !filterFire && !filterGrass && !filterElectric -> true
+                !filterFire && !filterGrass && filterElectric -> type == "electric" || type2 == "electric"
+                !filterFire && filterGrass && !filterElectric -> type == "grass" || type2 == "grass"
+                !filterFire && filterGrass && filterElectric -> (type == "grass" && type2 == "electric") || (type == "electric" && type2 == "grass")
+                filterFire && !filterGrass && !filterElectric -> type == "fire" || type2 == "fire"
+                filterFire && !filterGrass && filterElectric -> (type == "fire" && type2 == "electric") || (type == "electric" && type2 == "fire")
+                filterFire && filterGrass && !filterElectric -> (type == "fire" && type2 == "grass") || (type == "grass" && type2 == "fire")
+                filterFire && filterGrass && filterElectric -> false
+                else -> false
+            }
+        }
+
+        fun shouldIncludeType(type: String, filterFire: Boolean, filterGrass: Boolean, filterElectric: Boolean): Boolean{
+            return when{
+                !filterFire && !filterGrass && !filterElectric -> true
+                !filterFire && !filterGrass && filterElectric -> type == "electric"
+                !filterFire && filterGrass && !filterElectric -> type == "grass"
+                !filterFire && filterGrass && filterElectric -> false
+                filterFire && !filterGrass && !filterElectric -> type == "fire"
+                filterFire && !filterGrass && filterElectric -> false
+                filterFire && filterGrass && !filterElectric -> false
+                filterFire && filterGrass && filterElectric -> false
+                else -> false
             }
         }
 

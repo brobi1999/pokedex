@@ -1,6 +1,7 @@
 package hu.bme.aut.pokedex.ui.list
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,6 +18,7 @@ import hu.bme.aut.pokedex.databinding.FragmentListBinding
 import hu.bme.aut.pokedex.model.ui.Poke
 import hu.bme.aut.pokedex.util.MyUtil
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -32,6 +35,8 @@ class ListFragment : Fragment(), PokeAdapter.Listener, DetailDialogFragment.Deta
 
     private val viewModel: ListViewModel by activityViewModels()
 
+    private val pokeAdapter = PokeAdapter(this, this)
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,16 +49,56 @@ class ListFragment : Fragment(), PokeAdapter.Listener, DetailDialogFragment.Deta
         super.onViewCreated(view, savedInstanceState)
         initPokePagerAdapter()
 
+        binding.etName.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                //Perform Code
+                if(viewModel.isCacheEmpty().not()){
+                    viewModel.nameQuery = binding.etName.text.toString()
+                    updateCheckBoxStatusInViewModel()
+                    pokeAdapter.refresh()
+                }
+
+                return@OnKeyListener true
+            }
+            false
+        })
+
+        setupFilter()
+
+        binding.btnSearch.setOnClickListener {
+            viewModel.nameQuery = binding.etName.text.toString()
+            updateCheckBoxStatusInViewModel()
+            pokeAdapter.refresh()
+        }
+    }
+
+    private fun updateCheckBoxStatusInViewModel(){
+        viewModel.filterFire = binding.cbFire.isChecked
+        viewModel.filterGrass = binding.cbGrass.isChecked
+        viewModel.filterElectric = binding.cbElectric.isChecked
+    }
+
+    private fun setupFilter() {
+        binding.btnFilter.setOnClickListener {
+            if(binding.linLayoutFilter.isVisible)
+                binding.linLayoutFilter.visibility = View.GONE
+            else
+                binding.linLayoutFilter.visibility = View.VISIBLE
+        }
+
     }
 
     private fun initPokePagerAdapter() {
-        val items = viewModel.items
-        val pokeAdapter = PokeAdapter(this, this)
         binding.rvPoke.adapter = pokeAdapter
         binding.rvPoke.layoutManager = GridLayoutManager(requireContext(), 2)
-        val decoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-        binding.rvPoke.addItemDecoration(decoration)
 
+        val job = viewModel.getAllPokemon()
+        job.invokeOnCompletion {
+            startPagingFlow()
+        }
+    }
+
+    private fun startPagingFlow(){
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 pokeAdapter.loadStateFlow.collect {
@@ -66,7 +111,7 @@ class ListFragment : Fragment(), PokeAdapter.Listener, DetailDialogFragment.Deta
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                items.collectLatest {
+                viewModel.items.collectLatest {
                     pokeAdapter.submitData(it)
                 }
             }

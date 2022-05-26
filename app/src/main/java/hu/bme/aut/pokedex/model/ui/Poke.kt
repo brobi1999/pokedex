@@ -15,5 +15,6 @@ data class Poke (
     val back_female: String? = null,
     val front_default: String? = null,
     val front_female: String? = null,
-    val typeSlotOne: String? = null
+    val typeSlotOne: String? = null,
+    val typeSlotTwo: String? = null
 ) : Parcelable

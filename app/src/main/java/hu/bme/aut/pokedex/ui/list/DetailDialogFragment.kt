@@ -56,24 +56,40 @@ class DetailDialogFragment : DialogFragment() {
         val poke = arguments?.getParcelable<Poke>(KEY_POKE)
         binding.pokeName.text = poke?.name.toString().replaceFirstChar { it.uppercase() }
         MyUtil.configureLabelTypeLayout(binding.labelType, poke?.typeSlotOne.toString(), requireContext())
+        if(poke?.typeSlotTwo != null)
+            MyUtil.configureLabelTypeLayout(binding.labelTypeSlot2, poke.typeSlotTwo.toString(), requireContext())
+        else
+            binding.labelTypeSlot2.labelBackgroundCardView.visibility = View.GONE
         MyUtil.configureStatLayout(binding.statLayout, poke?.hp, poke?.def, poke?.atk, poke?.sp, requireContext())
         binding.rbBack.setOnClickListener { onCheckBoxCheckChanged(poke) }
         binding.rbFront.setOnClickListener { onCheckBoxCheckChanged(poke) }
         binding.rbMale.setOnClickListener { onCheckBoxCheckChanged(poke) }
         binding.rbFemale.setOnClickListener { onCheckBoxCheckChanged(poke) }
+        onCheckBoxCheckChanged(poke)
 
-
-
-
+        binding.btnDismiss.setOnClickListener {
+            dismiss()
+        }
     }
 
     private fun onCheckBoxCheckChanged(poke: Poke?) {
-        when{
-            binding.rbFront.isChecked && binding.rbBack.isChecked && binding.rbMale.isChecked && binding.rbFemale.isChecked ->{
-                //Glide.with(this).load(poke?.front_default).into(holder.binding.ivPoke)
+        var url: String? = null
+        url = when{
+            binding.rbFront.isChecked && binding.rbMale.isChecked ->{
+                poke?.front_default
             }
-
+            binding.rbFront.isChecked && binding.rbFemale.isChecked ->{
+                poke?.front_female
+            }
+            binding.rbBack.isChecked && binding.rbMale.isChecked ->{
+                poke?.back_default
+            }
+            binding.rbBack.isChecked && binding.rbFemale.isChecked ->{
+                poke?.back_female
+            }
+            else -> poke?.front_default
         }
+        Glide.with(this).load(url).into(binding.ivPoke)
     }
 
     override fun onDismiss(dialog: DialogInterface) {

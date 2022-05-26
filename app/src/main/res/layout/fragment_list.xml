@@ -22,7 +22,7 @@
             android:gravity="center"
             android:orientation="horizontal"
             android:padding="10dp"
-            android:weightSum="4"
+            android:weightSum="5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -48,10 +48,17 @@
                     android:ems="10"
                     android:inputType="textPersonName"
                     android:padding="5dp"
-                    android:text="@string/name" />
+                    tools:text="@string/name" />
 
             </com.google.android.material.card.MaterialCardView>
 
+            <ImageButton
+                android:id="@+id/btnFilter"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.6"
+                android:background="@color/white"
+                android:src="@drawable/outline_filter_list_black_24" />
 
             <ImageView
                 android:id="@+id/profileIcon"
@@ -62,12 +69,48 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/linLayoutFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:weightSum="3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linLayoutSearch">
+
+            <CheckBox
+                android:id="@+id/cbFire"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/fire"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:id="@+id/cbGrass"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/grass"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:id="@+id/cbElectric"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/electric"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/prepend_progress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:indeterminate="true"
-            app:layout_constraintTop_toBottomOf="@+id/linLayoutSearch"
+            app:layout_constraintTop_toBottomOf="@+id/linLayoutFilter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -75,7 +118,12 @@
             android:id="@+id/rvPoke"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp"
+
+            android:clipToPadding="false"
+            android:paddingBottom="150dp"
+            android:paddingTop="20dp"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
             android:scrollbars="vertical"
             app:layout_constraintTop_toBottomOf="@+id/prepend_progress"
             app:layout_constraintEnd_toEndOf="parent"

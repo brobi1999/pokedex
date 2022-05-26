@@ -4,7 +4,7 @@ data class PokeList (
     val count: Long? = null,
     val next: String? = null,
     val previous: String? = null,
-    val results: List<PokeResult>? = null
+    val results: List<PokeResult>
 )
 
 data class PokeResult (
