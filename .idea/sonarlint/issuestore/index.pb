@@ -9,7 +9,13 @@ g
 7app/src/main/java/hu/bme/aut/pokedex/PokeApplication.kt,f\6\f63916c61be55d2b4c6ad77c588f11c553f25612
 P
  app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
-c
-3app/src/main/java/hu/bme/aut/pokedex/util/MyUtil.kt,a\9\a94fbf2f47d4264f75e59923493e15977e9da901
 d
 4app/src/main/java/hu/bme/aut/pokedex/MainActivity.kt,c\4\c4ac0476eadc70ee6188edbf60c12afe3186cc99
+o
+?app/src/main/java/hu/bme/aut/pokedex/ui/login/LoginViewModel.kt,2\7\27a1f527f9e9b0f177968d6cc1cb75a65bd0f76d
+i
+9app/src/main/java/hu/bme/aut/pokedex/model/ui/PokeType.kt,2\4\24ad575a2dbe2f4e384a7def5e9743d87dd5639e
+m
+=app/src/main/java/hu/bme/aut/pokedex/model/domain/PokeList.kt,c\f\cf798e5324bed85ffbd998b7514bda7bcd48d395
+o
+?app/src/main/java/hu/bme/aut/pokedex/model/domain/PokeDetail.kt,6\3\639941b201a6c3e9d1f01ab1d56d67cbd7de8273

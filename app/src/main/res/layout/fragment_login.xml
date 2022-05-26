@@ -59,7 +59,9 @@
             android:layout_width="30dp"
             android:layout_height="30dp" />
 
-        <include layout="@layout/label_fire"/>
+        <include
+            android:id="@+id/labelFire"
+            layout="@layout/label_type"/>
 
         <CheckBox
             android:layout_marginStart="10dp"
@@ -67,7 +69,9 @@
             android:layout_width="30dp"
             android:layout_height="30dp" />
 
-        <include layout="@layout/label_grass"/>
+        <include
+            android:id="@+id/labelGrass"
+            layout="@layout/label_type"/>
 
         <CheckBox
             android:layout_marginStart="10dp"
@@ -75,7 +79,9 @@
             android:layout_width="30dp"
             android:layout_height="30dp" />
 
-        <include layout="@layout/label_electric"/>
+        <include
+            android:id="@+id/labelElectric"
+            layout="@layout/label_type"/>
 
     </LinearLayout>
 

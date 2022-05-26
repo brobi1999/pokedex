@@ -1,4 +1,6 @@
 package hu.bme.aut.pokedex.ui.login
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import hu.bme.aut.pokedex.R
 import hu.bme.aut.pokedex.databinding.FragmentLoginBinding
 import hu.bme.aut.pokedex.model.ui.PokeType
 
@@ -32,6 +35,8 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setTypeLabels()
+
         viewModel.success.observe(viewLifecycleOwner) { newSuccess ->
             if(newSuccess){
                 viewModel.successReceived()
@@ -46,6 +51,20 @@ class LoginFragment : Fragment() {
         binding.btnLogin.setOnClickListener {
             LoginDialogFragment.newInstance().show(parentFragmentManager, LoginDialogFragment.TAG)
         }
+    }
+
+    private fun setTypeLabels() {
+        binding.labelFire.labelBackgroundCardView.setCardBackgroundColor(Color.RED)
+        binding.labelFire.tvLabelType.text = getString(R.string.fire)
+        binding.labelFire.tvLabelType.setTextColor(Color.WHITE)
+
+        binding.labelGrass.labelBackgroundCardView.setCardBackgroundColor(Color.GREEN)
+        binding.labelGrass.tvLabelType.text = getString(R.string.grass)
+        binding.labelGrass.tvLabelType.setTextColor(Color.BLACK)
+
+        binding.labelElectric.labelBackgroundCardView.setCardBackgroundColor(Color.YELLOW)
+        binding.labelElectric.tvLabelType.text = getString(R.string.electric)
+        binding.labelElectric.tvLabelType.setTextColor(Color.BLACK)
     }
 
     private fun getFavouriteTypes(): ArrayList<Int> {

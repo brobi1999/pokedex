@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitHelper {
 
-    val baseUrl = "https://pokeapi.co/api/v2/"
+    val baseUrl = "https://pokeapi.co/"
 
     fun getInstance(): Retrofit {
 

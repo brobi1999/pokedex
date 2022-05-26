@@ -15,4 +15,10 @@
     <string name="password_min_length">Password must be at least 6 characters long!</string>
     <string name="malformed_email">Email is malformed</string>
     <string name="login">Login</string>
+    <string name="stat_atk">Atk %s</string>
+    <string name="stat_def">Def %s</string>
+    <string name="stat_hp">Hp %s</string>
+    <string name="stat_Sp">Sp %s</string>
+    <string name="back">Back</string>
+    <string name="front">Front</string>
 </resources>

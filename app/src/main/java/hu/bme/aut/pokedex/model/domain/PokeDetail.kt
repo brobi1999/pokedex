@@ -3,6 +3,8 @@ package hu.bme.aut.pokedex.model.domain
 import com.google.gson.annotations.SerializedName
 
 data class PokeDetail (
+    @SerializedName("id") val id: Int,
+    @SerializedName("name") val name: String? = null,
     @SerializedName("stats") val stats: List<ComplexStat>? = null,
     @SerializedName("sprites") val sprites: SpriteValues? = null,
     @SerializedName("types") val types: List<DomainType>? = null

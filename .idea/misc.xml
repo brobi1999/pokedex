@@ -3,17 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/drawable/asd.xml" value="0.276" />
         <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/drawable/dialog_background.xml" value="0.195" />
+        <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/drawable/image_checkbox_button_tint_selector.xml" value="0.2955" />
         <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/activity_main.xml" value="0.18802083333333333" />
         <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/cb_fire.xml" value="0.36666666666666664" />
         <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/dialog_auth.xml" value="0.36666666666666664" />
+        <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/dialog_detail.xml" value="0.5" />
         <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/dialog_register.xml" value="0.33" />
-        <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/fragment_list.xml" value="0.264" />
+        <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/fragment_list.xml" value="0.5" />
         <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/fragment_login.xml" value="0.5" />
-        <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/label_electric.xml" value="0.34556159420289856" />
-        <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/label_fire.xml" value="0.75" />
-        <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/label_grass.xml" value="0.34556159420289856" />
-        <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/poke_item.xml" value="0.2390625" />
+        <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/label_electric.xml" value="2.0" />
+        <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/label_fire.xml" value="0.9" />
+        <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/label_grass.xml" value="1.5" />
+        <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/label_type.xml" value="0.9" />
+        <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/layout_stat.xml" value="0.365625" />
+        <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/layout/poke_item.xml" value="0.67" />
         <entry key="..\:/android_projects/bitraptors/pokedex/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2865" />
       </map>
     </option>
