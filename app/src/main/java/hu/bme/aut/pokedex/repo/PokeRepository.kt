@@ -17,7 +17,8 @@ class PokeRepository @Inject constructor(){
         pokeList: List<PokeResult>,
         nameQuery: String,
         favList: MutableList<String>,
-    ): PokePagingSource = PokePagingSource(this, pokeList, nameQuery, favList)
+        shouldDisplayFavouritesOnly: Boolean,
+    ): PokePagingSource = PokePagingSource(this, pokeList, nameQuery, favList, shouldDisplayFavouritesOnly)
 
     suspend fun getPokemonList(offset: Int, loadSize: Int): PokeList {
         val response = pokeApi.getPokeList(loadSize, offset)

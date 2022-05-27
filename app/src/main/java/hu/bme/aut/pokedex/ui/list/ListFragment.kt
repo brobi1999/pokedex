@@ -1,7 +1,6 @@
 package hu.bme.aut.pokedex.ui.list
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -10,15 +9,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
-import androidx.paging.PagingData
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import hu.bme.aut.pokedex.databinding.FragmentListBinding
 import hu.bme.aut.pokedex.model.ui.Poke
 import hu.bme.aut.pokedex.util.MyUtil
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -52,7 +48,7 @@ class ListFragment : Fragment(), PokeAdapter.Listener, DetailDialogFragment.Deta
         binding.etName.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
                 //Perform Code
-                refreshListWithNewFilters()
+                viewModel.refreshView()
 
                 return@OnKeyListener true
             }
@@ -62,7 +58,7 @@ class ListFragment : Fragment(), PokeAdapter.Listener, DetailDialogFragment.Deta
         setupFilter()
 
         binding.btnSearch.setOnClickListener {
-            refreshListWithNewFilters()
+            viewModel.refreshView()
         }
 
         viewModel.favAdded.observe(viewLifecycleOwner) { newAddedFav ->
@@ -75,10 +71,22 @@ class ListFragment : Fragment(), PokeAdapter.Listener, DetailDialogFragment.Deta
                 pokeAdapter.favRemoved(newRemovedFav)
             }
         }
+
+        binding.cbFavIcon.setOnCheckedChangeListener { _, _ ->
+            viewModel.refreshView()
+        }
+
+        viewModel.refresh.observe(viewLifecycleOwner) { newRefresh ->
+            if(newRefresh){
+                refreshListWithNewFilters()
+                viewModel.refreshReceived()
+            }
+        }
     }
 
     private fun refreshListWithNewFilters(){
         if(viewModel.isCacheReady.value == true){
+            viewModel.shouldDisplayFavouritesOnly = binding.cbFavIcon.isChecked
             viewModel.nameQuery = binding.etName.text.toString()
             updateCheckBoxStatusInViewModel()
             pokeAdapter.refresh()

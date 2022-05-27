@@ -65,7 +65,8 @@
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                tools:srcCompat="@tools:sample/avatars" />
+                android:buttonTint="@color/red"
+                android:button="@drawable/fav_normal_view_icon_selector" />
 
         </LinearLayout>
 

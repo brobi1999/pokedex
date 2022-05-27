@@ -27,6 +27,8 @@ class ListViewModel @Inject constructor(
 
     private lateinit var favList: MutableList<String>
 
+    var shouldDisplayFavouritesOnly: Boolean = false
+
     init {
         getCache()
     }
@@ -77,7 +79,7 @@ class ListViewModel @Inject constructor(
     val items: Flow<PagingData<Poke>> = Pager(
         config = PagingConfig(pageSize = ITEMS_PER_PAGE, enablePlaceholders = false),
         pagingSourceFactory = {
-            pokeRepository.pokePagingSource(pokeList, nameQuery, favList)
+            pokeRepository.pokePagingSource(pokeList, nameQuery, favList, shouldDisplayFavouritesOnly)
         }
     )
         .flow
@@ -108,6 +110,22 @@ class ListViewModel @Inject constructor(
         viewModelScope.launch {
             firebaseRepository.removePokeNameFromFavourites(name)
             _favRemoved.value = name
+        }
+    }
+
+    private val _refresh = MutableLiveData<Boolean>(false)
+    val refresh: LiveData<Boolean>
+        get() = _refresh
+
+    fun refreshReceived(){
+        _refresh.value = false
+    }
+
+    fun refreshView() {
+        viewModelScope.launch {
+            //update favList
+            getAllFavPokNames()
+            _refresh.value = true
         }
     }
 

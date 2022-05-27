@@ -13,7 +13,8 @@ class PokePagingSource(
     private val pokeRepository: PokeRepository,
     pokeList: List<PokeResult>,
     private val nameQuery: String,
-    private val favList: MutableList<String>
+    private val favList: MutableList<String>,
+    private val shouldDisplayFavouritesOnly: Boolean
 ) :
     PagingSource<Int, Poke>() {
 
@@ -24,6 +25,11 @@ class PokePagingSource(
         if(nameQuery.isNotEmpty()){
             pokeNameList = pokeNameList.filter {
                 it.contains(nameQuery)
+            }
+        }
+        if(shouldDisplayFavouritesOnly){
+            pokeNameList = pokeNameList.filter {
+                favList.contains(it)
             }
         }
     }
