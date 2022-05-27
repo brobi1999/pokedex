@@ -24,6 +24,19 @@
             tools:text = "Pikachu"
             />
 
+        <CheckBox
+            android:id="@+id/cbIsFav"
+            android:layout_marginEnd="5dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@android:color/transparent"
+            android:buttonTint="@color/red"
+            android:translationZ="3dp"
+            app:layout_constraintBottom_toBottomOf="@+id/btnDismiss"
+            app:layout_constraintEnd_toStartOf="@id/btnDismiss"
+            app:layout_constraintTop_toTopOf="@+id/btnDismiss"
+            android:button="@drawable/cb_favourite_selector" />
+
         <ImageButton
             android:id="@+id/btnDismiss"
             android:layout_width="30dp"

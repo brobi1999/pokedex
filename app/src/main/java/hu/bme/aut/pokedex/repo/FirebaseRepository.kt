@@ -42,4 +42,25 @@ class FirebaseRepository @Inject constructor() {
         db.collection("Users").document(firebaseAuth.currentUser?.uid!!).set(userData).await()
     }
 
+    suspend fun getFavouritePokeNamesForCurrentUser(): List<String>{
+        val list = mutableListOf<String>()
+        val favPokeNamesRef = db.collection("Users").document(firebaseAuth.currentUser?.uid!!).collection("fav_poke_names")
+        val querySnapshot = favPokeNamesRef.get().await()
+        for(docSnapshot in querySnapshot){
+            val name = docSnapshot.id
+            list.add(name)
+        }
+        return list
+    }
+
+    suspend fun addPokeNameToFavourites(name: String){
+        db.collection("Users").document(firebaseAuth.currentUser?.uid!!).collection("fav_poke_names").document(name).set(
+            hashMapOf("exists" to true)).await()
+    }
+
+    suspend fun removePokeNameFromFavourites(name: String){
+        db.collection("Users").document(firebaseAuth.currentUser?.uid!!).collection("fav_poke_names").document(name).delete().await()
+    }
+
+
 }

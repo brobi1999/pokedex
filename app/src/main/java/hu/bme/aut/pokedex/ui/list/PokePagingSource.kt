@@ -1,5 +1,4 @@
 package hu.bme.aut.pokedex.ui.list
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import hu.bme.aut.pokedex.model.domain.PokeResult
@@ -13,7 +12,8 @@ const val STARTING_KEY = 0
 class PokePagingSource(
     private val pokeRepository: PokeRepository,
     pokeList: List<PokeResult>,
-    private val nameQuery: String
+    private val nameQuery: String,
+    private val favList: MutableList<String>
 ) :
     PagingSource<Int, Poke>() {
 
@@ -43,6 +43,9 @@ class PokePagingSource(
 
         return try {
             val response = pokeRepository.getPokemonDetails(queryList)
+            response.map {
+                it.isFavourite = favList.contains(it.name)
+            }
 
             LoadResult.Page(
                 data = response,

@@ -30,6 +30,17 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <CheckBox
+            android:id="@+id/cbIsFav"
+            android:background="@android:color/transparent"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:translationZ="3dp"
+            android:button="@drawable/cb_favourite_selector"
+            app:layout_constraintEnd_toEndOf="@id/materialCardView"
+            app:layout_constraintTop_toTopOf="@id/materialCardView"
+            android:buttonTint="@color/red"
+            />
 
         <TextView
             android:id="@+id/tvPokeName"

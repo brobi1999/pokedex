@@ -1,5 +1,4 @@
 package hu.bme.aut.pokedex.ui.list
-import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
@@ -61,18 +60,29 @@ class DetailDialogFragment : DialogFragment() {
         else
             binding.labelTypeSlot2.labelBackgroundCardView.visibility = View.GONE
         MyUtil.configureStatLayout(binding.statLayout, poke?.hp, poke?.def, poke?.atk, poke?.sp, requireContext())
-        binding.rbBack.setOnClickListener { onCheckBoxCheckChanged(poke) }
-        binding.rbFront.setOnClickListener { onCheckBoxCheckChanged(poke) }
-        binding.rbMale.setOnClickListener { onCheckBoxCheckChanged(poke) }
-        binding.rbFemale.setOnClickListener { onCheckBoxCheckChanged(poke) }
-        onCheckBoxCheckChanged(poke)
+        binding.rbBack.setOnClickListener { onRadioButtonCheckChanged(poke) }
+        binding.rbFront.setOnClickListener { onRadioButtonCheckChanged(poke) }
+        binding.rbMale.setOnClickListener { onRadioButtonCheckChanged(poke) }
+        binding.rbFemale.setOnClickListener { onRadioButtonCheckChanged(poke) }
+        onRadioButtonCheckChanged(poke)
 
         binding.btnDismiss.setOnClickListener {
             dismiss()
         }
+
+        binding.cbIsFav.isChecked = poke?.isFavourite == true
+
+        binding.cbIsFav.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked){
+                viewModel.addPokeToFavourites(poke?.name.toString())
+            }
+            else{
+                viewModel.removePokeFromFavourites(poke?.name.toString())
+            }
+        }
     }
 
-    private fun onCheckBoxCheckChanged(poke: Poke?) {
+    private fun onRadioButtonCheckChanged(poke: Poke?) {
         var url: String? = null
         url = when{
             binding.rbFront.isChecked && binding.rbMale.isChecked ->{

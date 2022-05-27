@@ -35,7 +35,7 @@ class ListFragment : Fragment(), PokeAdapter.Listener, DetailDialogFragment.Deta
 
     private val viewModel: ListViewModel by activityViewModels()
 
-    private val pokeAdapter = PokeAdapter(this, this)
+    private lateinit var pokeAdapter: PokeAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,11 +52,7 @@ class ListFragment : Fragment(), PokeAdapter.Listener, DetailDialogFragment.Deta
         binding.etName.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
                 //Perform Code
-                if(viewModel.isCacheEmpty().not()){
-                    viewModel.nameQuery = binding.etName.text.toString()
-                    updateCheckBoxStatusInViewModel()
-                    pokeAdapter.refresh()
-                }
+                refreshListWithNewFilters()
 
                 return@OnKeyListener true
             }
@@ -66,6 +62,23 @@ class ListFragment : Fragment(), PokeAdapter.Listener, DetailDialogFragment.Deta
         setupFilter()
 
         binding.btnSearch.setOnClickListener {
+            refreshListWithNewFilters()
+        }
+
+        viewModel.favAdded.observe(viewLifecycleOwner) { newAddedFav ->
+            if(newAddedFav != null){
+                pokeAdapter.favAdded(newAddedFav)
+            }
+        }
+        viewModel.favRemoved.observe(viewLifecycleOwner) { newRemovedFav ->
+            if(newRemovedFav != null){
+                pokeAdapter.favRemoved(newRemovedFav)
+            }
+        }
+    }
+
+    private fun refreshListWithNewFilters(){
+        if(viewModel.isCacheReady.value == true){
             viewModel.nameQuery = binding.etName.text.toString()
             updateCheckBoxStatusInViewModel()
             pokeAdapter.refresh()
@@ -85,16 +98,17 @@ class ListFragment : Fragment(), PokeAdapter.Listener, DetailDialogFragment.Deta
             else
                 binding.linLayoutFilter.visibility = View.VISIBLE
         }
-
     }
 
     private fun initPokePagerAdapter() {
-        binding.rvPoke.adapter = pokeAdapter
-        binding.rvPoke.layoutManager = GridLayoutManager(requireContext(), 2)
+        viewModel.isCacheReady.observe(viewLifecycleOwner) { newIsCacheReady ->
+            if(newIsCacheReady){
+                pokeAdapter = PokeAdapter(this, this)
+                binding.rvPoke.adapter = pokeAdapter
+                binding.rvPoke.layoutManager = GridLayoutManager(requireContext(), 2)
+                startPagingFlow()
+            }
 
-        val job = viewModel.getAllPokemon()
-        job.invokeOnCompletion {
-            startPagingFlow()
         }
     }
 
@@ -134,15 +148,19 @@ class ListFragment : Fragment(), PokeAdapter.Listener, DetailDialogFragment.Deta
                     }
                 }
             }
-
-
-
-
-
         }
     }
 
+    override fun addPokeToFavourites(name: String) {
+        viewModel.addPokeToFavourites(name)
+    }
+
+    override fun removePokeFromFavourites(name: String) {
+        viewModel.removePokeFromFavourites(name)
+    }
+
     //hide blur on dialog dismiss
+    //and update adapter favNameList for consistent ui
     override fun onDismissCalled() {
         binding.ivBlur.visibility = View.GONE
     }
