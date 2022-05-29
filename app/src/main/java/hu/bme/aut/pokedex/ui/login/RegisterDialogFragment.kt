@@ -8,6 +8,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,7 +40,7 @@ class RegisterDialogFragment: DialogFragment() {
     private var _binding: DialogAuthBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: LoginViewModel by activityViewModels()
+    private val viewModel: LoginViewModel by viewModels(ownerProducer = { requireParentFragment() })
 
     override fun onCreateView(
         inflater: LayoutInflater,

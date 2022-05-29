@@ -1,5 +1,6 @@
 package hu.bme.aut.pokedex.ui.list
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -23,12 +24,8 @@ class PokeAdapter(
         return PokeViewHolder(binding)
     }
 
-    //hashMap for notifyItemChanged()
-    private val nameToPositionMap = mutableMapOf<String, Int>()
-
     override fun onBindViewHolder(holder: PokeViewHolder, position: Int) {
         val poke = getItem(position)
-        nameToPositionMap[poke?.name.toString()] = position
 
         holder.binding.tvPokeName.text = poke?.name.toString().replaceFirstChar { it.uppercase() }
 
@@ -57,24 +54,31 @@ class PokeAdapter(
     }
 
     fun favAdded(newAddedFav: String) {
+        val position = this@PokeAdapter.snapshot().indexOfFirst {
+            it?.name == newAddedFav
+        }
         val snapshotPoke = this@PokeAdapter.snapshot().firstOrNull { snapshotPoke ->
             snapshotPoke?.name == newAddedFav
         }
         if(snapshotPoke != null) {
             snapshotPoke.isFavourite = true
         }
-        nameToPositionMap[newAddedFav]?.let { this@PokeAdapter.notifyItemChanged(it) }
-
+        //update
+        this@PokeAdapter.notifyItemChanged(position)
     }
 
     fun favRemoved(newRemovedFav: String) {
+        val position = this@PokeAdapter.snapshot().indexOfFirst {
+            it?.name == newRemovedFav
+        }
         val snapshotPoke = this@PokeAdapter.snapshot().firstOrNull { snapshotPoke ->
             snapshotPoke?.name == newRemovedFav
         }
         if(snapshotPoke != null) {
             snapshotPoke.isFavourite = false
         }
-        nameToPositionMap[newRemovedFav]?.let { this@PokeAdapter.notifyItemChanged(it) }
+        //update
+        this@PokeAdapter.notifyItemChanged(position)
     }
 
     inner class PokeViewHolder(val binding: PokeItemBinding) : RecyclerView.ViewHolder(binding.root) {

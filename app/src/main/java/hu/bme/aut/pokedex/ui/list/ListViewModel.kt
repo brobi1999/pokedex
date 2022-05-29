@@ -41,6 +41,14 @@ class ListViewModel @Inject constructor(
         favList = firebaseRepository.getFavouritePokeNamesForCurrentUser() as MutableList<String>
     }
 
+    private val _isError = MutableLiveData<Exception?>(null)
+    val isError: LiveData<Exception?>
+        get() = _isError
+
+    fun errorReceived(){
+        _isError.value = null
+    }
+
     private fun getCache(){
         viewModelScope.launch {
             try{
@@ -52,6 +60,7 @@ class ListViewModel @Inject constructor(
             }
             catch (e: Exception){
                 e.printStackTrace()
+                _isError.value = e
             }
 
         }

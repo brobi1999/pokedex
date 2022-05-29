@@ -1,10 +1,13 @@
 package hu.bme.aut.pokedex.ui.list
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -18,6 +21,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.net.ConnectException
 
 @AndroidEntryPoint
 class ListFragment : Fragment(), PokeAdapter.Listener, DetailDialogFragment.DetailDialogListener{
@@ -29,7 +33,7 @@ class ListFragment : Fragment(), PokeAdapter.Listener, DetailDialogFragment.Deta
     private var _binding: FragmentListBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: ListViewModel by activityViewModels()
+    private val viewModel: ListViewModel by viewModels()
 
     private lateinit var pokeAdapter: PokeAdapter
 
@@ -82,8 +86,17 @@ class ListFragment : Fragment(), PokeAdapter.Listener, DetailDialogFragment.Deta
                 viewModel.refreshReceived()
             }
         }
+
+        viewModel.isError.observe(viewLifecycleOwner) { newException ->
+            if(newException != null){
+                Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+                viewModel.errorReceived()
+            }
+        }
+
     }
 
+    //called by liveData observer, use viewModel.refreshView()
     private fun refreshListWithNewFilters(){
         if(viewModel.isCacheReady.value == true){
             viewModel.shouldDisplayFavouritesOnly = binding.cbFavIcon.isChecked
@@ -114,6 +127,10 @@ class ListFragment : Fragment(), PokeAdapter.Listener, DetailDialogFragment.Deta
                 pokeAdapter = PokeAdapter(this, this)
                 binding.rvPoke.adapter = pokeAdapter
                 binding.rvPoke.layoutManager = GridLayoutManager(requireContext(), 2)
+                binding.swipeRefreshLayout.setOnRefreshListener {
+                    viewModel.refreshView()
+                    binding.swipeRefreshLayout.isRefreshing = false
+                }
                 startPagingFlow()
             }
 
@@ -124,8 +141,22 @@ class ListFragment : Fragment(), PokeAdapter.Listener, DetailDialogFragment.Deta
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 pokeAdapter.loadStateFlow.collect {
+                    //handle progressBar
                     binding.prependProgress.isVisible = it.source.prepend is LoadState.Loading || it.source.refresh is LoadState.Loading
                     binding.appendProgress.isVisible = it.source.append is LoadState.Loading || it.source.refresh is LoadState.Loading
+
+                    //handleErrorMessage
+                    val errorState = when {
+                        it.source.append is LoadState.Error -> it.source.append as LoadState.Error
+                        it.source.prepend is LoadState.Error ->  it.source.prepend as LoadState.Error
+                        it.source.refresh is LoadState.Error -> it.source.refresh as LoadState.Error
+                        else -> null
+                    }
+                    errorState?.let {
+                        if(errorState.error is ConnectException){
+                            Toast.makeText(requireContext(), "Failed to connect to API", Toast.LENGTH_SHORT).show()
+                        }
+                    }
 
                 }
             }
@@ -151,7 +182,7 @@ class ListFragment : Fragment(), PokeAdapter.Listener, DetailDialogFragment.Deta
                         withContext(Dispatchers.Main){
                             binding.ivBlur.setImageBitmap(blurBitmap)
                             binding.ivBlur.visibility = View.VISIBLE
-                            dialogFragment.show(parentFragmentManager, DetailDialogFragment.TAG)
+                            dialogFragment.show(childFragmentManager, DetailDialogFragment.TAG)
                         }
                     }
                 }

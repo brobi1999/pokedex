@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import hu.bme.aut.pokedex.R
@@ -23,7 +24,7 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: LoginViewModel by activityViewModels()
+    private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,10 +47,10 @@ class LoginFragment : Fragment() {
         }
 
         binding.btnSaveAccount.setOnClickListener {
-            RegisterDialogFragment.newInstance(binding.etName.text.toString(), getFavouriteTypes()).show(parentFragmentManager, RegisterDialogFragment.TAG)
+            RegisterDialogFragment.newInstance(binding.etName.text.toString(), getFavouriteTypes()).show(childFragmentManager, RegisterDialogFragment.TAG)
         }
         binding.btnLogin.setOnClickListener {
-            LoginDialogFragment.newInstance().show(parentFragmentManager, LoginDialogFragment.TAG)
+            LoginDialogFragment.newInstance().show(childFragmentManager, LoginDialogFragment.TAG)
         }
     }
 

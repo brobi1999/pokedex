@@ -115,20 +115,31 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvPoke"
-            android:layout_width="match_parent"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:clipToPadding="false"
-            android:paddingBottom="150dp"
-            android:paddingTop="20dp"
-            android:paddingEnd="20dp"
-            android:paddingStart="20dp"
-            android:scrollbars="vertical"
             app:layout_constraintTop_toBottomOf="@+id/prepend_progress"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPoke"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:clipToPadding="false"
+                android:paddingBottom="150dp"
+                android:paddingTop="20dp"
+                android:paddingEnd="20dp"
+                android:paddingStart="20dp"
+                android:scrollbars="vertical"
+                />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/append_progress"

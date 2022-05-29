@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import hu.bme.aut.pokedex.R
@@ -39,7 +40,7 @@ class DetailDialogFragment : DialogFragment() {
     private var _binding: DialogDetailBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: ListViewModel by activityViewModels()
+    private val viewModel: ListViewModel by viewModels(ownerProducer = { requireParentFragment() })
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -117,7 +118,7 @@ class DetailDialogFragment : DialogFragment() {
             )
         }
         //parentFragment is last fragment on stack
-        listener = requireParentFragment().childFragmentManager.fragments[0] as DetailDialogListener
+        listener = requireParentFragment() as DetailDialogListener
 
     }
 
